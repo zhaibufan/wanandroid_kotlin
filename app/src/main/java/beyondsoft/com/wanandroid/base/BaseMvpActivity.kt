@@ -92,5 +92,4 @@ abstract class BaseMvpActivity<V : IView, P : IPresenter<V>> : BaseActivity(), I
         mPresenter?.detachView()
         mPresenter = null
     }
-
 }

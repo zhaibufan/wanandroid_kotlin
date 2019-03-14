@@ -3,6 +3,7 @@ package beyondsoft.com.wanandroid.base
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import beyondsoft.com.wanandroid.R
 
 abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), IView {
@@ -74,6 +75,7 @@ abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), I
     }
 
     override fun showError(err: String) {
+        Toast.makeText(mActivity, err, Toast.LENGTH_SHORT).show()
         hideCurrentView()
         currentState = ERROR_STATE
         mErrorView?.visibility = View.VISIBLE

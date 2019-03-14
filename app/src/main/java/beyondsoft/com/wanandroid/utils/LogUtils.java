@@ -258,6 +258,10 @@ public class LogUtils {
 
     private static String getObjectsString(Object... objects) {
 
+        if (objects == null) {
+            return NULL;
+        }
+
         if (objects.length > 1) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("\n");
@@ -282,9 +286,11 @@ public class LogUtils {
                 }
             }
             return stringBuilder.toString();
-        } else {
+        } else if (objects.length > 0){
             Object object = objects[0];
             return object == null ? NULL : object.toString();
+        } else {
+            return NULL;
         }
     }
 }
