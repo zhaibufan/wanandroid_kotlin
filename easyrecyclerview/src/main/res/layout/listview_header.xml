@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/listview_header_content"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="68dp"
         >
 
         <LinearLayout
