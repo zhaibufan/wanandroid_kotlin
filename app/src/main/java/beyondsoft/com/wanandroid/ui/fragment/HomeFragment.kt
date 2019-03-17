@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide
 import com.zhouyou.recyclerview.XRecyclerView
 import com.zhouyou.recyclerview.refresh.ProgressStyle
 
-class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
+class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View{
 
     private val TAG = "HomeFragment"
 

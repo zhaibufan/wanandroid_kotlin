@@ -1,9 +1,6 @@
 package beyondsoft.com.wanandroid.api
 
-import beyondsoft.com.wanandroid.mvp.model.bean.Article
-import beyondsoft.com.wanandroid.mvp.model.bean.ArticleResponseBody
-import beyondsoft.com.wanandroid.mvp.model.bean.Banner
-import beyondsoft.com.wanandroid.mvp.model.bean.HttpResult
+import beyondsoft.com.wanandroid.mvp.model.bean.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -31,4 +28,11 @@ interface ApiService {
      */
     @GET("article/list/{pageNum}/json")
     fun getArticles(@Path("pageNum") pageNum: Int): Observable<HttpResult<ArticleResponseBody>>
+
+
+    /**
+     * 获取导航数据
+     */
+    @GET("navi/json")
+    fun getNavigationData() : Observable<HttpResult<MutableList<Navigation>>>
 }
