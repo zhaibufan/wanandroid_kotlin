@@ -48,7 +48,7 @@ abstract class BaseMvpActivity<V : IView, P : IPresenter<V>> : BaseActivity(), I
         mLoadingView?.visibility = View.GONE
 
         mPresenter = createPresenter()
-        mPresenter?.attachView(this as V)
+        if (mPresenter != null) mPresenter?.attachView(this as V)
     }
 
     abstract fun createPresenter() : P
@@ -89,7 +89,7 @@ abstract class BaseMvpActivity<V : IView, P : IPresenter<V>> : BaseActivity(), I
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter?.detachView()
+        if (mPresenter != null) mPresenter?.detachView()
         mPresenter = null
     }
 }

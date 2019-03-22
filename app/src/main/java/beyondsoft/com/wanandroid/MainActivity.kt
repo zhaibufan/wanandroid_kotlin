@@ -1,8 +1,13 @@
 package beyondsoft.com.wanandroid
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Menu
+import android.view.MenuItem
 import beyondsoft.com.wanandroid.base.BaseActivity
+import beyondsoft.com.wanandroid.ui.activity.SearchActivity
 import beyondsoft.com.wanandroid.ui.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -31,6 +36,7 @@ class MainActivity : BaseActivity() {
             title = getString(R.string.app_name)
             setSupportActionBar(this)
         }
+        initDrawerLayout()
         initFragment()
         switchNavigation()
         switchFragment(mFromFragment, mHomeFragment)
@@ -45,6 +51,22 @@ class MainActivity : BaseActivity() {
         mNavigationFragment = NavigationFragment()
         mProjectFragment = ProjectFragment()
         mFm = this.supportFragmentManager
+    }
+
+    /**
+     * DrawerLayout和ActionBarDrawerToggle实现侧滑效果并有图标改变效果
+     */
+    private fun initDrawerLayout() {
+        drawer_layout.run {
+            var toggle = ActionBarDrawerToggle(
+                    this@MainActivity,
+                    this,
+                    toolbar
+                    , R.string.navigation_drawer_open,
+                    R.string.navigation_drawer_close)
+            addDrawerListener(toggle)
+            toggle.syncState()
+        }
     }
 
     private fun switchNavigation() {
@@ -114,5 +136,22 @@ class MainActivity : BaseActivity() {
                 transaction!!.hide(from).show(to).commitAllowingStateLoss()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.action_search -> {
+                Intent(this@MainActivity, SearchActivity::class.java).run {
+                    startActivity(this) //this指代对象 it指代参数(只有一个参数时使用it)
+                }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

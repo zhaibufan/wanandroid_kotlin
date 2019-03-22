@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide
 import com.zhouyou.recyclerview.XRecyclerView
 import com.zhouyou.recyclerview.refresh.ProgressStyle
 
-class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View{
+class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
 
     private val TAG = "HomeFragment"
 
@@ -27,7 +27,8 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
     var mRecyclerView: XRecyclerView? = null
     var mAdapter: ArticleAdapter? = null
     var mLayoutManager: LinearLayoutManager? = null
-    var mArticleData = mutableListOf<Article>()
+    var mArticleData = mutableListOf<Article>() //列表的数据
+    var temporaryData = mutableListOf<Article>() //临时的数据集合 用于保存列表临时数据
     var loadBannerFinished = false
     var loadArticleFinished = false
     var loadTopArticleFinished = false
@@ -64,12 +65,14 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
             override fun onLoadMore() {
                 loadMore()
             }
+
             override fun onRefresh() {
                 Log.e(TAG, "onRefresh")
+                refreshData()
             }
         })
 
-        mAdapter?.setOnItemViewClickListener(object : OnItemViewClickListener{
+        mAdapter?.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onLikeClick(position: Int) {
                 Log.e(TAG, "收藏  position = $position")
             }
@@ -103,6 +106,25 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
         mPresenter?.getArticleList(pageSize)
     }
 
+    /**
+     * 刷新最新数据
+     */
+    private fun refreshData() {
+        pageSize = 0
+        //保存列表数据(避免刷新失败后之前列表数据被清空导致页面没数据，所以当请求失败后将
+        // temporaryData数据再赋值给mArticleData，详见showError方法)
+        temporaryData.clear()
+        temporaryData.addAll(mArticleData)
+        //清空列表数据
+        mArticleData.clear()
+        //刷新数据
+        mPresenter?.getArticleList(pageSize)
+        mPresenter?.getTopArticle()
+        loadTopArticleFinished = false
+        loadArticleFinished = false
+
+    }
+
     private fun addHeader() {
         val headerView = layoutInflater.inflate(R.layout.layout_home_banner, null)
         mBanner = headerView.findViewById(R.id.view_banner)
@@ -123,7 +145,7 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
             bannerData.add(iv)
         }
         mBanner?.updateBanner(bannerData as List<View>?)
-        mBanner?.setCurrentItem(banner.size*10)
+        mBanner?.setCurrentItem(banner.size * 10)
         mBanner?.setOnPagerItemClickListener {
             Log.e(TAG, "position=$it")
         }
@@ -131,13 +153,14 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
 
     override fun setArticleList(data: MutableList<Article>) {
         LogUtils.d(TAG, "data=$data")
+        loadArticleFinished = true
         if (pageSize == 0) { //首次加载 第一页
-            loadArticleFinished = true
+            isRefreshFinished()
             isAllLoadFinished()
             mArticleData.addAll(data)
             mAdapter?.setListAll(mArticleData)
         } else {
-            if(data.size>0) { //更多数据
+            if (data.size > 0) { //更多数据
                 mArticleData.addAll(data)
                 mAdapter?.setListAll(mArticleData)
                 mRecyclerView?.loadMoreComplete()
@@ -150,6 +173,7 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
 
     override fun setTopArticleList(data: MutableList<Article>) {
         loadTopArticleFinished = true
+        isRefreshFinished()
         isAllLoadFinished()
         mArticleData.addAll(0, data)
         mAdapter?.setListAll(mArticleData)
@@ -162,6 +186,25 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
         if (loadBannerFinished && loadArticleFinished && loadTopArticleFinished) {
             showNormal()
         }
+    }
+
+    /**
+     * 判断数据刷新是否完成
+     */
+    private fun isRefreshFinished() {
+        if (loadArticleFinished && loadTopArticleFinished) {
+            if (mRecyclerView!!.isRefreshing) {
+                mRecyclerView?.refreshComplete()
+            }
+        }
+    }
+
+    /**
+     * 重写showError方法 当刷新失败后再将临时数据赋给列表数据
+     */
+    override fun showError(err: String) {
+        super.showError(err)
+        mArticleData.addAll(temporaryData)
     }
 
     override fun reload() {

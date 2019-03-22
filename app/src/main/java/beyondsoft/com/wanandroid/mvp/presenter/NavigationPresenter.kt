@@ -5,7 +5,7 @@ import beyondsoft.com.wanandroid.api.ApiService
 import beyondsoft.com.wanandroid.api.ApiStore
 import beyondsoft.com.wanandroid.api.Transformer
 import beyondsoft.com.wanandroid.base.BasePresenter
-import beyondsoft.com.wanandroid.mvp.contract.NavigationConstract
+import beyondsoft.com.wanandroid.mvp.contract.NavigationContract
 import beyondsoft.com.wanandroid.mvp.model.bean.HttpResult
 import beyondsoft.com.wanandroid.mvp.model.bean.Navigation
 import io.reactivex.Observer
@@ -15,7 +15,7 @@ import io.reactivex.disposables.Disposable
  * @author zhaixiaofan
  * @date 2019/3/17 7:29 PM
  */
-class NavigationPresenter : BasePresenter<NavigationConstract.View>() , NavigationConstract.Presenter {
+class NavigationPresenter : BasePresenter<NavigationContract.View>() , NavigationContract.Presenter {
 
     private val TAG = "NavigationPresenter"
 

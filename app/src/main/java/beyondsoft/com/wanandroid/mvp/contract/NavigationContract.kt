@@ -9,7 +9,7 @@ import beyondsoft.com.wanandroid.mvp.model.bean.Navigation
  * @date 2019/3/17 7:25 PM
  */
 
-class NavigationConstract {
+class NavigationContract {
 
     interface View: IView {
         fun setNavigation(data : MutableList<Navigation>)
