@@ -7,12 +7,15 @@ import beyondsoft.com.wanandroid.mvp.contract.KnowledgeTreeContract
 import beyondsoft.com.wanandroid.mvp.model.bean.KnowledgeTreeBody
 import beyondsoft.com.wanandroid.mvp.presenter.KnowledgePresenter
 import beyondsoft.com.wanandroid.ui.adapter.KnowledgeAdapter
-import kotlinx.android.synthetic.main.fragment_knowledge.*
+import com.zhouyou.recyclerview.XRecyclerView
 
 class KnowledgeFragment : BaseMvpFragment<KnowledgeTreeContract.View, KnowledgeTreeContract.Presenter>(), KnowledgeTreeContract.View {
 
+    val TAG = "KnowledgeFragment"
+    private var recyclerView: XRecyclerView? = null
     private val mData = mutableListOf<KnowledgeTreeBody>()
-    private val mAdapter : KnowledgeAdapter by lazy { KnowledgeAdapter(context!!) }
+    private val mAdapter: KnowledgeAdapter by lazy { KnowledgeAdapter(context!!) }
+
     /**
      * LinearLayoutManager
      */
@@ -33,11 +36,14 @@ class KnowledgeFragment : BaseMvpFragment<KnowledgeTreeContract.View, KnowledgeT
 
     override fun initView() {
         super.initView()
-        recyclerView.run {
+        recyclerView = view!!.findViewById(R.id.normal_view)
+        showLoading()
+        recyclerView!!.run {
             adapter = mAdapter
             layoutManager = linearLayoutManager
         }
-        showLoading()
+        recyclerView?.isLoadingMoreEnabled = false
+        recyclerView?.isPullRefreshEnabled = false
     }
 
     override fun scrollToTop() {

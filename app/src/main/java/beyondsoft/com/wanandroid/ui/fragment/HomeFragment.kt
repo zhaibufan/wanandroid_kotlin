@@ -1,9 +1,7 @@
 package beyondsoft.com.wanandroid.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import beyondsoft.com.wanandroid.R
@@ -48,7 +46,7 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
     override fun initView() {
         super.initView()
         showLoading()
-        mRecyclerView = mActivity?.findViewById(R.id.recyclerView)
+        mRecyclerView = mActivity?.findViewById(R.id.normal_view)
         mLayoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
         mLayoutManager?.isAutoMeasureEnabled = true
         mRecyclerView?.layoutManager = mLayoutManager
@@ -208,5 +206,15 @@ class HomeFragment : BaseMvpFragment<HomeContract.View, HomeContract.Presenter>(
     }
 
     override fun reload() {
+    }
+
+    fun scrollToTop() {
+        mRecyclerView?.run {
+            if (mLayoutManager!!.findFirstVisibleItemPosition() > 20) {
+                scrollToPosition(0)
+            } else {
+                smoothScrollToPosition(0)
+            }
+        }
     }
 }

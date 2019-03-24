@@ -29,6 +29,17 @@
             app:elevation="@dimen/dp_16"
             app:layout_behavior="beyondsoft.com.wanandroid.widget.behavior.BottomNavigationBehavior"/>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floating_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_60"
+            app:srcCompat="@drawable/ic_arrow_upward_white_24dp"
+            app:layout_behavior="beyondsoft.com.wanandroid.widget.behavior.ScaleDownShowBehavior"/>
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

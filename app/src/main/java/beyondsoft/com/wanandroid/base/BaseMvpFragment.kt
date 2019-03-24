@@ -2,9 +2,11 @@ package beyondsoft.com.wanandroid.base
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import beyondsoft.com.wanandroid.R
+import beyondsoft.com.wanandroid.utils.LogUtils
 
 abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), IView {
 
@@ -25,24 +27,30 @@ abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), I
 
 
     override fun initView() {
-        mNormalView = mActivity?.findViewById(R.id.normal_view)
+        LogUtils.e(TAG, "initView")
+        mNormalView = view!!.findViewById(R.id.normal_view)
         if (mNormalView == null) {
             throw IllegalStateException("There must be no mNormalView in the activity")
         }
         if (mNormalView?.parent !is ViewGroup) {
             throw IllegalStateException("The parent layout of mNormalView must belong to the viewgroup")
         }
-        val parent = mNormalView?.parent as ViewGroup
-        View.inflate(mActivity, R.layout.view_empty, parent)
-        View.inflate(mActivity, R.layout.view_error, parent)
-        View.inflate(mActivity, R.layout.view_loading, parent)
 
-        mLoadingView = parent.findViewById(R.id.loading_group)
-        mErrorView = parent.findViewById(R.id.error_group)
-        mEmptyView = parent.findViewById(R.id.empty_group)
+        val parent = mNormalView?.parent as ViewGroup
+        val childCount = parent.childCount
+        val b = parent is FrameLayout
+        LogUtils.e(TAG, "b---$b----$childCount")
+
+        mEmptyView = View.inflate(mContext, R.layout.view_empty, null)
+        mErrorView = View.inflate(mContext, R.layout.view_error, null)
+        mLoadingView = View.inflate(mContext, R.layout.view_loading, null)
+
+        parent.addView(mEmptyView)
+        parent.addView(mErrorView)
+        parent.addView(mLoadingView)
 
         // 重新加载
-        parent.findViewById<TextView>(R.id.tv_reload).setOnClickListener {
+        mErrorView?.findViewById<TextView>(R.id.tv_reload)?.setOnClickListener {
             reload()
         }
 
@@ -99,5 +107,11 @@ abstract class BaseMvpFragment<V : IView, P : IPresenter<V>> : BaseFragment(), I
     }
 
     override fun reload() {
+    }
+
+    fun hideAll() {
+        mEmptyView?.visibility = View.GONE
+        mErrorView?.visibility = View.GONE
+        mLoadingView?.visibility = View.GONE
     }
 }
