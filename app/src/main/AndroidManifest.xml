@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".ui.activity.SearchActivity"/>
+        <activity android:name=".ui.activity.KnowledgeActivity"/>
 
     </application>
 

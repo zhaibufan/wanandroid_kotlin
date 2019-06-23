@@ -1,5 +1,7 @@
 package beyondsoft.com.wanandroid.mvp.model.bean
 
+import java.io.Serializable
+
 /**
  * 返回的基础数据
  */
@@ -45,6 +47,6 @@ data class NavigationResponseBody(val apkLink: String, val author: String,val ch
  * 知识体系数据
  */
 data class KnowledgeTreeBody(val children: MutableList<Knowledge>, val courseId: Int, val id: Int, val name: String,
-                             val order: Int, val parentChapterId: Int, val visible: Int)
+                             val order: Int, val parentChapterId: Int, val visible: Int) : Serializable
 data class Knowledge(val children: List<Any>, val courseId: Int, val id: Int, val name: String, val order: Int,
-                     val parentChapterId: Int, val visible: Int)
+                     val parentChapterId: Int, val visible: Int) : Serializable

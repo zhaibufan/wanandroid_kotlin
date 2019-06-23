@@ -1,19 +1,12 @@
 package beyondsoft.com.wanandroid.ui.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import beyondsoft.com.wanandroid.R
-import beyondsoft.com.wanandroid.R.id.tv_article_top
 import beyondsoft.com.wanandroid.mvp.model.bean.Article
 import com.zhouyou.recyclerview.adapter.HelperRecyclerViewAdapter
 import com.zhouyou.recyclerview.adapter.HelperRecyclerViewHolder
-import kotlinx.android.synthetic.main.item_article.view.*
 
 class ArticleAdapter(context: Context) : HelperRecyclerViewAdapter<Article>(context, R.layout.item_article) {
 

@@ -1,11 +1,14 @@
 package beyondsoft.com.wanandroid.ui.fragment
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import beyondsoft.com.wanandroid.R
 import beyondsoft.com.wanandroid.base.BaseMvpFragment
+import beyondsoft.com.wanandroid.constant.Constant
 import beyondsoft.com.wanandroid.mvp.contract.KnowledgeTreeContract
 import beyondsoft.com.wanandroid.mvp.model.bean.KnowledgeTreeBody
 import beyondsoft.com.wanandroid.mvp.presenter.KnowledgePresenter
+import beyondsoft.com.wanandroid.ui.activity.KnowledgeActivity
 import beyondsoft.com.wanandroid.ui.adapter.KnowledgeAdapter
 import com.zhouyou.recyclerview.XRecyclerView
 
@@ -44,6 +47,15 @@ class KnowledgeFragment : BaseMvpFragment<KnowledgeTreeContract.View, KnowledgeT
         }
         recyclerView?.isLoadingMoreEnabled = false
         recyclerView?.isPullRefreshEnabled = false
+
+        mAdapter.setOnItemClickListener { view, item, position ->
+            val knowledgeTreeBody = mData[position]
+            Intent(activity, KnowledgeActivity::class.java).run {
+                putExtra(Constant.CONTENT_TITLE_KEY, knowledgeTreeBody.name)
+                putExtra(Constant.CONTENT_DATA_KEY, knowledgeTreeBody)
+                startActivity(this)
+            }
+        }
     }
 
     override fun scrollToTop() {

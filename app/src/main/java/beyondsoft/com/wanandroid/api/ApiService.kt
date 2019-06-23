@@ -5,7 +5,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import kotlin.collections.ArrayList
 
 interface ApiService {
 
@@ -56,4 +55,13 @@ interface ApiService {
      */
     @GET("navi/json")
     fun getNavigationData() : Observable<HttpResult<MutableList<Navigation>>>
+
+    /**
+     * 项目列表数据
+     * http://www.wanandroid.com/project/list/1/json?cid=294
+     * @param page
+     * @param cid
+     */
+    @GET("project/list/{page}/json")
+    fun getProjectList(@Path("page") page: Int, @Query("cid") cid: Int): Observable<HttpResult<ArticleResponseBody>>
 }

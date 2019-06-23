@@ -7,4 +7,21 @@ object Constant {
 
     const val SP_NIGHT_MODE = "switch_nightMode"
 
+    /**
+     * title key
+     */
+    const val CONTENT_TITLE_KEY = "title"
+    /**
+     * content data key
+     */
+    const val CONTENT_DATA_KEY = "content_data"
+    /**
+     * id key
+     */
+    const val CONTENT_ID_KEY = "id"
+    /**
+     * id key
+     */
+    const val CONTENT_CID_KEY = "cid"
+
 }
