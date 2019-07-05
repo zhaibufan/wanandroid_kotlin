@@ -25,7 +25,7 @@ class KnowledgeDetailFragment : BaseMvpFragment<KnowledgeDetailContract.View, Kn
     var mArticleData = mutableListOf<Article>() //列表的数据
 
     /**
-     * Knowledge Adapter
+     * mAdapter必须设置成成员变量 否则加载数据不显示
      */
     private val mAdapter: ArticleAdapter by lazy {
         ArticleAdapter(this!!.mContext!!)
