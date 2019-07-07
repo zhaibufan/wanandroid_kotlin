@@ -72,6 +72,8 @@ class KnowledgeDetailFragment : BaseMvpFragment<KnowledgeDetailContract.View, Kn
         LogUtils.e("TAG", "initView" )
         linearLayoutManager?.isAutoMeasureEnabled = true
         normal_view?.layoutManager = linearLayoutManager
+        normal_view.isPullRefreshEnabled = false
+        normal_view.isLoadingMoreEnabled = false
         normal_view?.adapter = mAdapter
 
     }
