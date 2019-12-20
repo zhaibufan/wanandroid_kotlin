@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * 返回的基础数据
  */
-data class HttpResult<T>(val data: T, val errorCode: Int, val errorMsg: String)
+data class HttpResult<T>(val data: T, val errorCode: Int, val errorMsg: String) : Serializable
 
 /**
  * 轮播图
@@ -50,3 +50,4 @@ data class KnowledgeTreeBody(val children: MutableList<Knowledge>, val courseId:
                              val order: Int, val parentChapterId: Int, val visible: Int) : Serializable
 data class Knowledge(val children: List<Any>, val courseId: Int, val id: Int, val name: String, val order: Int,
                      val parentChapterId: Int, val visible: Int) : Serializable
+

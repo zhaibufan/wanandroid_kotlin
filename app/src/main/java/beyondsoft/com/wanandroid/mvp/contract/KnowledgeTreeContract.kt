@@ -18,5 +18,7 @@ class KnowledgeTreeContract {
 
         fun requestKnowledgeTree()
 
+        fun loadCache()
+
     }
 }

@@ -3,6 +3,7 @@ package beyondsoft.com.wanandroid
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
 import android.util.Log
@@ -23,7 +24,6 @@ class App : Application() {
             private set
 
         lateinit var instance: Application
-
     }
 
 
